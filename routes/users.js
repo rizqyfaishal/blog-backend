@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+	User = require('../models/User'),
+	auth = require('../middlewares/auth'),
+	router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/login', auth.authenticate('local',{session:false}),function(req, res) {
+  res.json(req.user);
 });
+
+router.post('/', function(req, res){
+	res.json(req.body);
+});
+
 
 module.exports = router;
